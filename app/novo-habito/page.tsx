@@ -1,11 +1,20 @@
 function NewHabit() {
+  async function newHabits(formData:FormData) {
+      "use server";
+
+      const habit = formData.get("habit");
+
+      console.log(habit);
+  }
+
+  
   return (
     <main className="container relative flex flex-col gap-8 px-12 pt-16">
       <h1 className="text-4xl font-light text-center text-white font-display">
         Novo Hábito
       </h1>
 
-      <form className="flex flex-col gap-4 mt-4">
+      <form action={newHabits} className="flex flex-col gap-4 mt-4">
         <input
           type="text"
           name="habit"
