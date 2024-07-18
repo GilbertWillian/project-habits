@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import ArrowIcon from "./ArrowIcon";
+import DayState from "./DayState";
+import { Habits } from "@/app/page";
 
 /* https://stackoverflow.com/questions/13146418/find-all-the-days-in-a-month-with-date-object */
 function getDaysInMonth(month: number, year: number) {
@@ -22,7 +24,13 @@ const currentYear = currentDate.getFullYear();
 
 const weekDays = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
-function Calendar() {
+function Calendar({
+  habit,
+  habitStreak,
+}: {
+  habit: string;
+  habitStreak: Record<string, boolean> | null;
+}) {
   const [month, setMonth] = useState(currentMonth);
   const [year, setYear] = useState(currentYear);
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -60,6 +68,13 @@ function Calendar() {
     return `${upperCaseMonthName} de ${selectedDate.getFullYear()}`;
   }
 
+  function getDayString(day: Date) {
+    return `${year.toString()}-${(month + 1).toString().padStart(2, "0")}-${day
+      .getDate()
+      .toString()
+      .padStart(2, "0")}}`;
+  }
+
   return (
     <section className="w-full my-2 rounded-md bg-neutral-800">
       <div className="flex justify-between m-2 my-4 font-sans text-neutral-400">
@@ -89,6 +104,11 @@ function Calendar() {
             <span className="font-sans text-xs font-light text-neutral-400">
               {day?.getDate()}
             </span>
+            {day && (
+              <DayState
+                day={habitStreak ? habitStreak[getDayString(day)] : undefined}
+              />
+            )}
           </div>
         ))}
       </div>
