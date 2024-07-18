@@ -36,11 +36,11 @@ export default async function Home() {
           </h1>
         ))}
       {habits !== null &&
-        Object.entries(habits).map(([habits, habitsStreak]) => (
-          <div key={habits} className="flex flex-col gap-2">
+        Object.entries(habits).map(([habit, habitsStreak]) => (
+          <div key={habit} className="flex flex-col gap-2">
             <div className="flex justify-between items-center">
               <span className="text=xl font-light text-white font-sans">
-                {habits}
+                {habit}
               </span>
               <button>
                 <Image
@@ -51,17 +51,19 @@ export default async function Home() {
                 />
               </button>
             </div>
-            <section className="grid grid-cols-7 bg-neutral-800 rounded-md p-2">
-              {sortedWeekDays.map((day, index) => (
-                <div key={day} className="flex flex-col last:font-bold">
-                  <span className="font-sans text-xs text-white text-center">
-                    {day}
-                  </span>
-                  {/* day state */}
-                  <DayState day={habitsStreak[last7Days[index]]} />
-                </div>
-              ))}
-            </section>
+            <Link href={`habito/${habit}`}>
+              <section className="grid grid-cols-7 bg-neutral-800 rounded-md p-2">
+                {sortedWeekDays.map((day, index) => (
+                  <div key={day} className="flex flex-col last:font-bold">
+                    <span className="font-sans text-xs text-white text-center">
+                      {day}
+                    </span>
+                    {/* day state */}
+                    <DayState day={habitsStreak[last7Days[index]]} />
+                  </div>
+                ))}
+              </section>
+            </Link>
           </div>
         ))}
 
