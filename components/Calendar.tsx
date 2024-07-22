@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import ArrowIcon from "./ArrowIcon";
 import DayState from "./DayState";
 import { Habits } from "@/app/page";
+import { handleClientScriptLoad } from "next/script";
+import { toggledHabit } from "@/app/actions";
 
 /* https://stackoverflow.com/questions/13146418/find-all-the-days-in-a-month-with-date-object */
 function getDaysInMonth(month: number, year: number) {
@@ -100,7 +102,18 @@ function Calendar({
           </div>
         ))}
         {daysInMonth.map((day, index) => (
-          <div key={index} className="flex flex-col items-center p-2">
+          <div
+            key={index}
+            className="flex flex-col items-center p-2"
+            onClick={() =>
+              toggledHabit({
+                habit,
+                habitStreak,
+                date: getDayString(day),
+                done: habitStreak ? habitStreak[getDayString(day)] : true,
+              })
+            }
+          >
             <span className="font-sans text-xs font-light text-neutral-400">
               {day?.getDate()}
             </span>
